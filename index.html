@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Canada Embassy Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#eef3f9;
+color:#0f172a;
+padding:20px;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+}
+
+.header{
+background:white;
+padding:28px;
+border-radius:28px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+box-shadow:0 10px 30px rgba(15,23,42,0.06);
+flex-wrap:wrap;
+gap:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:18px;
+}
+
+.logo img{
+width:70px;
+height:50px;
+border-radius:10px;
+object-fit:cover;
+}
+
+.logo h1{
+font-size:34px;
+font-weight:900;
+}
+
+.logo p{
+color:#64748b;
+margin-top:5px;
+font-size:14px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:20px;
+margin-bottom:25px;
+}
+
+.card{
+background:white;
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(15,23,42,0.06);
+}
+
+.card h3{
+font-size:14px;
+color:#64748b;
+margin-bottom:12px;
+}
+
+.card h1{
+font-size:52px;
+font-weight:900;
+}
+
+.form-section{
+background:white;
+padding:30px;
+border-radius:28px;
+box-shadow:0 10px 30px rgba(15,23,42,0.06);
+margin-bottom:25px;
+}
+
+.section-title{
+font-size:32px;
+font-weight:900;
+margin-bottom:25px;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.input-group{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.input-group label{
+font-size:14px;
+font-weight:700;
+}
+
+input,
+select{
+padding:17px;
+border-radius:18px;
+border:1px solid #dbe2ea;
+background:#f8fafc;
+font-size:15px;
+outline:none;
+}
+
+.main-btn{
+width:100%;
+padding:18px;
+border:none;
+border-radius:18px;
+background:linear-gradient(90deg,#d52b1e,#ff3b30);
+color:white;
+font-size:17px;
+font-weight:800;
+cursor:pointer;
+margin-top:25px;
+}
+
+.table-section{
+background:white;
+padding:30px;
+border-radius:28px;
+box-shadow:0 10px 30px rgba(15,23,42,0.06);
+overflow:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th{
+background:#f1f5f9;
+padding:16px;
+font-size:13px;
+text-align:left;
+}
+
+td{
+padding:16px;
+border-bottom:1px solid #e2e8f0;
+}
+
+.profile{
+width:75px;
+height:75px;
+border-radius:18px;
+object-fit:cover;
+border:3px solid #d52b1e;
+}
+
+.status{
+padding:10px 14px;
+border-radius:12px;
+font-size:13px;
+font-weight:800;
+display:inline-block;
+}
+
+.approved{
+background:#dcfce7;
+color:#16a34a;
+}
+
+.processing{
+background:#ffedd5;
+color:#ea580c;
+}
+
+.rejected{
+background:#fee2e2;
+color:#dc2626;
+}
+
+.action-btn{
+padding:10px 15px;
+border:none;
+border-radius:14px;
+color:white;
+font-weight:700;
+cursor:pointer;
+margin-right:8px;
+}
+
+.edit{
+background:#f59e0b;
+}
+
+.delete{
+background:#dc2626;
+}
+
+@media(max-width:900px){
+
+.form-grid{
+grid-template-columns:1fr;
+}
+
+.logo h1{
+font-size:24px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<div class="logo">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg">
+
+<div>
+
+<h1>Canada Embassy Dashboard</h1>
+
+<p>Professional Immigration Management System</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="card">
+
+<h3>Total Applicants</h3>
+
+<h1 id="total">0</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Approved</h3>
+
+<h1 id="approvedCount">0</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Rejected</h3>
+
+<h1 id="rejectedCount">0</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Processing</h3>
+
+<h1 id="processingCount">0</h1>
+
+</div>
+
+</div>
+
+<div class="form-section">
+
+<h2 class="section-title">
+
+Register Applicant
+
+</h2>
+
+<div class="form-grid">
+
+<div class="input-group">
+
+<label>Full Name</label>
+
+<input type="text" id="fullname">
+
+</div>
+
+<div class="input-group">
+
+<label>Unique ID</label>
+
+<input type="text" id="uniqueid">
+
+</div>
+
+<div class="input-group">
+
+<label>ID Number</label>
+
+<input type="text" id="idnumber">
+
+</div>
+
+<div class="input-group">
+
+<label>Status</label>
+
+<select id="passport">
+
+<option>Processing</option>
+<option>Approved</option>
+<option>Rejected</option>
+
+</select>
+
+</div>
+
+<div class="input-group">
+
+<label>Passport Photo</label>
+
+<input type="file" id="photo">
+
+</div>
+
+</div>
+
+<button class="main-btn" onclick="addApplicant()">
+
+Register Applicant
+
+</button>
+
+</div>
+
+<div class="table-section">
+
+<h2 class="section-title">
+
+Registered Applicants
+
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Photo</th>
+<th>Name</th>
+<th>Unique ID</th>
+<th>ID Number</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+let applicants = [];
+
+function addApplicant(){
+
+const fullname =
+document.getElementById("fullname").value;
+
+const uniqueid =
+document.getElementById("uniqueid").value;
+
+const idnumber =
+document.getElementById("idnumber").value;
+
+const passport =
+document.getElementById("passport").value;
+
+const photoInput =
+document.getElementById("photo");
+
+const file =
+photoInput.files[0];
+
+if(
+fullname==="" ||
+uniqueid==="" ||
+idnumber===""
+){
+
+alert("Fill all fields");
+
+return;
+
+}
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+const applicant = {
+
+fullname,
+uniqueid,
+idnumber,
+passport,
+photo:e.target.result
+
+};
+
+applicants.push(applicant);
+
+renderApplicants();
+
+};
+
+if(file){
+
+reader.readAsDataURL(file);
+
+}
+
+}
+
+function renderApplicants(){
+
+const table =
+document.getElementById("tableBody");
+
+table.innerHTML = "";
+
+let approved = 0;
+let rejected = 0;
+let processing = 0;
+
+applicants.forEach((applicant,index)=>{
+
+let statusClass = "processing";
+
+if(applicant.passport==="Approved"){
+
+approved++;
+statusClass="approved";
+
+}
+else if(applicant.passport==="Rejected"){
+
+rejected++;
+statusClass="rejected";
+
+}
+else{
+
+processing++;
+
+}
+
+table.innerHTML += `
+
+<tr>
+
+<td>
+
+<img
+src="${applicant.photo}"
+class="profile">
+
+</td>
+
+<td>${applicant.fullname}</td>
+
+<td>${applicant.uniqueid}</td>
+
+<td>${applicant.idnumber}</td>
+
+<td>
+
+<div class="status ${statusClass}">
+${applicant.passport}
+</div>
+
+</td>
+
+<td>
+
+<button
+class="action-btn delete"
+onclick="deleteApplicant(${index})">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("total").innerText =
+applicants.length;
+
+document.getElementById("approvedCount").innerText =
+approved;
+
+document.getElementById("rejectedCount").innerText =
+rejected;
+
+document.getElementById("processingCount").innerText =
+processing;
+
+}
+
+function deleteApplicant(index){
+
+applicants.splice(index,1);
+
+renderApplicants();
+
+}
+
+</script>
+
+</body>
+  </html>
