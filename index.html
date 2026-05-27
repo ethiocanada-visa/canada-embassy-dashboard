@@ -15,6 +15,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
 <style>
 
 *{
@@ -31,7 +33,7 @@ color:#0f172a;
 }
 
 .container{
-max-width:1400px;
+max-width:1450px;
 margin:auto;
 }
 
@@ -175,6 +177,7 @@ text-align:left;
 td{
 padding:16px;
 border-bottom:1px solid #e2e8f0;
+vertical-align:middle;
 }
 
 .profile{
@@ -216,10 +219,20 @@ color:white;
 font-weight:700;
 cursor:pointer;
 margin-right:8px;
+margin-bottom:6px;
+}
+
+.edit{
+background:#2563eb;
 }
 
 .delete{
 background:#dc2626;
+}
+
+.qr-box canvas{
+width:70px !important;
+height:70px !important;
 }
 
 @media(max-width:900px){
@@ -381,6 +394,7 @@ Registered Applicants
 <th>Unique ID</th>
 <th>ID Number</th>
 <th>Status</th>
+<th>QR</th>
 <th>Action</th>
 
 </tr>
@@ -407,7 +421,8 @@ collection,
 addDoc,
 getDocs,
 deleteDoc,
-doc
+doc,
+updateDoc
 }
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
@@ -565,7 +580,21 @@ ${applicant.passport}
 
 </td>
 
+<td class="qr-box">
+
+<canvas id="qr-${userDoc.id}"></canvas>
+
+</td>
+
 <td>
+
+<button
+class="action-btn edit"
+onclick="editApplicant('${userDoc.id}','${applicant.passport}')">
+
+Edit
+
+</button>
 
 <button
 class="action-btn delete"
@@ -581,6 +610,15 @@ Delete
 
 `;
 
+setTimeout(()=>{
+
+QRCode.toCanvas(
+document.getElementById(`qr-${userDoc.id}`),
+applicant.uniqueid
+);
+
+},100);
+
 });
 
 document.getElementById("total").innerText =
@@ -594,6 +632,30 @@ rejected;
 
 document.getElementById("processingCount").innerText =
 processing;
+
+}
+
+window.editApplicant =
+async function(id,currentStatus){
+
+let newStatus =
+prompt(
+"Enter new status:\nApproved\nRejected\nProcessing",
+currentStatus
+);
+
+if(!newStatus) return;
+
+await updateDoc(
+doc(db,"users",id),
+{
+passport:newStatus
+}
+);
+
+alert("Applicant Updated");
+
+location.reload();
 
 }
 
