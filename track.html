@@ -15,6 +15,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <style>
 
 *{
@@ -180,6 +182,17 @@ padding:10px;
 border-radius:20px;
 }
 
+.download-btn{
+padding:16px 24px;
+border:none;
+border-radius:16px;
+background:#16a34a;
+color:white;
+font-weight:800;
+cursor:pointer;
+margin-top:25px;
+}
+
 .section-title{
 font-size:28px;
 font-weight:900;
@@ -264,6 +277,10 @@ grid-template-columns:1fr;
 font-size:28px;
 }
 
+.search-box input{
+width:100%;
+}
+
 }
 
 </style>
@@ -279,7 +296,9 @@ font-size:28px;
 <h1>Canada Immigration Tracking Portal</h1>
 
 <p>
+
 Track your immigration application using your Unique ID or Identification Number
+
 </p>
 
 <div class="search-box">
@@ -365,9 +384,23 @@ Track Application
 
 <div class="qr-section">
 
-<h3 style="margin-bottom:10px;">QR Verification</h3>
+<h3 style="margin-bottom:10px;">
+
+QR Verification
+
+</h3>
 
 <canvas id="qrcode"></canvas>
+
+<br><br>
+
+<button
+class="download-btn"
+onclick="downloadPDF()">
+
+Download PDF
+
+</button>
 
 </div>
 
@@ -384,7 +417,9 @@ Fingerprint / Signature Verification
 </h2>
 
 <p style="color:#64748b;">
+
 Upload fingerprint or signature for applicant verification
+
 </p>
 
 <input type="file">
@@ -550,10 +585,23 @@ document.getElementById("status").innerHTML =
 ${applicant.passport}
 </span>`;
 
+document.getElementById("qrcode").innerHTML="";
+
 QRCode.toCanvas(
 document.getElementById("qrcode"),
 applicant.uniqueid
 );
+
+}
+
+window.downloadPDF = function(){
+
+const element =
+document.getElementById("resultCard");
+
+html2pdf()
+.from(element)
+.save("canada-application.pdf");
 
 }
 
@@ -592,3 +640,4 @@ loadApplicants();
 
 </body>
   </html>
+  
